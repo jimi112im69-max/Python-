@@ -1,0 +1,61 @@
+import random
+
+
+cards = {
+    "2": 2, "3": 3, "4": 4, "5": 5, "6": 6,
+    "7": 7, "8": 8, "9": 9, "10": 10,
+    "J": 10, "Q": 10, "K": 10, "A": 11
+}
+
+def calculate_hand(hand):
+    total = sum(cards[card] for card in hand)
+    if total > 21 and "A" in hand:
+        total -= 10
+    return total
+
+
+while True:
+    start = input("Натисни 1 за да започнеш игра (или 0 за изход): ")
+    if start == "0":
+        print("Играта приключи. Благодаря, че игра!")
+        break
+
+    player_hand = [random.choice(list(cards.keys())) for _ in range(2)]
+    dealer_hand = [random.choice(list(cards.keys())) for _ in range(2)]
+
+    print(f"Твоите карти: {player_hand}, сбор: {calculate_hand(player_hand)}")
+    print(f"Карта на дилъра: {dealer_hand[0]} и [скрита]")
+
+    while True:
+        choice = input("Искаш ли още карта? (y/n): ").lower()
+        if choice == "y":
+            new_card = random.choice(list(cards.keys()))
+            player_hand.append(new_card)
+            total = calculate_hand(player_hand)
+            print(f"Изтегли {new_card}. Твоите карти: {player_hand}, сбор: {total}")
+            if total > 21:
+                print("Прегоря! (над 21) — губиш рунда.")
+                break
+        else:
+            break
+
+    if calculate_hand(player_hand) <= 21:
+        print(f"Картите на дилъра: {dealer_hand}, сбор: {calculate_hand(dealer_hand)}")
+        while calculate_hand(dealer_hand) < 17:
+            new_card = random.choice(list(cards.keys()))
+            dealer_hand.append(new_card)
+            print(f"Дилърът тегли {new_card}. Сбор: {calculate_hand(dealer_hand)}")
+
+        player_total = calculate_hand(player_hand)
+        dealer_total = calculate_hand(dealer_hand)
+
+        print(f"\nКраен резултат: Ти = {player_total} | Дилър = {dealer_total}")
+
+        if dealer_total > 21 or player_total > dealer_total:
+            print(" Победи!")
+        elif player_total == dealer_total:
+            print(" Равенство.")
+        else:
+            print(" Загуби.")
+
+    print("-" * 40)
