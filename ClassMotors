@@ -1,0 +1,38 @@
+ 
+class Motor:
+    counter = 0
+
+    def __init__(self, model, power):
+        self.model = model
+        self.power = power
+        Motor.counter += 1
+
+    @classmethod
+    def get_motor_count(cls):
+        return cls.counter
+
+    def __str__(self):
+        return f"Motor(model={self.model}, power={self.power} HP)"
+
+
+
+motor1 = Motor("Yamaha", 150)
+motor2 = Motor("Honda", 200)
+motor3 = Motor("Suzuki", 180)
+
+print(motor1)
+print(motor2)
+print(motor3)
+
+print(f"Общо създадени мотори: {Motor.get_motor_count()}")
+ 
+
+Обяснение:
+
+Създадох клас  Motor  с две свойства:  model  и  power .
+Използвам класова променлива  counter , която брои колко обекта от този клас са създадени.
+Всеки път, когато се създава нов обект, броячът се увеличава с 1.
+Методът  get_motor_count  връща текущия брой създадени обекти.
+В примерния код създавам три мотора и отпечатвам техните данни и общия брой създадени обекти.
+
+Ако желаете, мога да добавя и допълнителни функции или да направя кода по-сложен.
